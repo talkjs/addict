@@ -42,7 +42,7 @@ defmodule Addict.Interactors.ResetPassword do
       false -> user_id
     end
 
-    {:ok, String.to_integer(generation_time), String.to_integer(id)}
+    {:ok, String.to_integer(generation_time), id}
   end
 
   defp validate_generation_time(generation_time) do
