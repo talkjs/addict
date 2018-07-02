@@ -66,6 +66,9 @@ defmodule Addict.Interactors.ResetPassword do
     %Addict.PasswordUser{}
     |> Ecto.Changeset.cast(%{password: password}, ~w(password), [])
     |> ValidatePassword.call(password_strategies)
+    |> do_validate_password
   end
 
+  defp do_validate_password({:error, [password: {reason, _additional_errors}]}), do: {:error, [password: reason]}
+  defp do_validate_password({:ok, []}), do: {:ok, []}
 end
