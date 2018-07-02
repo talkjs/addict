@@ -15,11 +15,25 @@ defmodule Addict.Mailers.MailSender do
 
   def send_reset_token(email, path, host \\ Addict.Configs.host) do
     host = host || "http://localhost:4000"
-    template = Addict.Configs.email_reset_password_template || "<p>You've requested to reset your password. Click <a href='#{host}<%= path %>'>here</a> to proceed!</p>"
     subject = Addict.Configs.email_reset_password_subject || "Reset Password"
-    params = %{"email" => email, "path" => path} |> convert_to_list
-    html_body = EEx.eval_string(template, params)
     from_email = Addict.Configs.from_email || "no-reply@addict.github.io"
+    params = %{
+      "email" => email,
+      "path" => path,
+      "subject" => subject,
+      "host" => host,
+      "from_email" => from_email
+    }
+
+    template = case Addict.Configs.email_reset_password_template do
+      nil -> "<p>You've requested to reset your password. Click <a href='#{host}<%= path %>'>here</a> to proceed!</p>"
+      string when is_binary(string) -> string
+      {mod, func} -> apply(mod, func, [params])
+      func -> apply(func, [params])
+    end
+
+    html_body = EEx.eval_string(template, convert_to_list(params))
+
     Addict.Mailers.send_email(email, from_email, subject, html_body)
   end
 
