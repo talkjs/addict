@@ -11,7 +11,7 @@ defmodule Addict.Interactors.ValidatePassword do
   end
 
   def call(changeset, strategies) do
-    strategies = 
+    strategies =
       case Enum.count(strategies) do
         0 -> [:default]
         _ -> strategies
@@ -32,13 +32,17 @@ defmodule Addict.Interactors.ValidatePassword do
     {:error, messages}
   end
 
+  defp validate(:short, password) when is_bitstring(password) do
+    if String.length(password) > 0, do: [], else: [{:password, {"is too short", []}}]
+  end
+
   defp validate(:default, password) when is_bitstring(password) do
     if String.length(password) > 5, do: [], else: [{:password, {"is too short", []}}]
   end
 
   defp validate(:default, changeset) do
     Ecto.Changeset.validate_change(changeset, :password, fn (_field, value) ->
-      validate(:default, value)
+      validate(:short, value)
     end).errors
   end
 
