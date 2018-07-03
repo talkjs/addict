@@ -31,7 +31,6 @@ defmodule Addict.Interactors.ValidatePassword do
   defp format_response(messages) do
     {:error, messages}
   end
-  {:error, [authentication: "Incorrect e-mail/password"]}
 
   defp validate(:short, password) when is_bitstring(password) do
     if String.length(password) > 0, do: [], else: [password: "is too short"]
