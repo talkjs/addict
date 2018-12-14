@@ -5,10 +5,10 @@ defmodule Addict.Mixfile do
     [app: :addict,
      version: "0.3.0",
      elixir: "~> 1.2",
-     description: description,
-     package: package,
+     description: description(),
+     package: package(),
      docs: &docs/0,
-     deps: deps]
+     deps: deps()]
   end
 
   def application do
