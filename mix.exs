@@ -24,13 +24,14 @@ defmodule Addict.Mixfile do
   end
 
   defp deps do
-    [{:cowboy, "~> 2.0"},
+    [{:plug_cowboy, "~> 2.0"},
      {:phoenix, "~> 1.4"},
-     {:ecto, "~> 3.0"},
+     {:phoenix_ecto, "~> 4.0"},
+     {:ecto_sql, "~> 3.1"},
+     {:postgrex, ">= 0.0.0"},
      {:comeonin, "~> 2.1" },
      {:mailgun, "~> 0.1"},
      {:mock, "~> 0.1.3", only: :test},
-     {:postgrex, "~> 0.11", only: :test},
      {:earmark, "~> 0.2", only: :dev},
      {:ex_doc, "~> 0.11", only: :dev}]
   end
