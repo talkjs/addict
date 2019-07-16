@@ -24,8 +24,8 @@ defmodule Addict.Mixfile do
   end
 
   defp deps do
-    [{:cowboy, "~> 1.0"},
-     {:phoenix, "~> 1.1"},
+    [{:cowboy, "~> 2.0"},
+     {:phoenix, "~> 1.4"},
      {:ecto, "~> 2.0"},
      {:comeonin, "~> 2.1" },
      {:mailgun, "~> 0.1"},
